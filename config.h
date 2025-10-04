@@ -3,18 +3,25 @@
 /* Constants */
 #define TERMINAL "st"
 #define TERMCLASS "St"
-#define BROWSER "librewolf"
+#define BROWSER "chromium"
+// #define BROWSER "librewolf"
 // #define BROWSER "qutebrowser"
 
 /* appearance */
 static unsigned int borderpx = 3; /* border pixel of windows */
 static unsigned int snap = 32;    /* snap pixel */
-static unsigned int gappih = 20;  /* horiz inner gap between windows */
-static unsigned int gappiv = 10;  /* vert inner gap between windows */
+// static unsigned int gappih = 20;  /* horiz inner gap between windows */
+static unsigned int gappih = 0; /* horiz inner gap between windows */
+// static unsigned int gappiv = 10;  /* vert inner gap between windows */
+static unsigned int gappiv = 0; /* vert inner gap between windows */
+// static unsigned int gappoh =
+//     10; /* horiz outer gap between windows and screen edge */
 static unsigned int gappoh =
-    10; /* horiz outer gap between windows and screen edge */
+    0; /* horiz outer gap between windows and screen edge */
+// static unsigned int gappov =
+//     30; /* vert outer gap between windows and screen edge */
 static unsigned int gappov =
-    30; /* vert outer gap between windows and screen edge */
+    0; /* vert outer gap between windows and screen edge */
 static int swallowfloating =
     0; /* 1 means swallow floating windows by default */
 static int smartgaps =
@@ -62,6 +69,7 @@ static const Rule rules[] = {
     /* class    instance      title       	 tags mask    isfloating
        isterminal  noswallow  monitor */
     {"Gimp", NULL, NULL, 1 << 8, 0, 0, 0, -1},
+    {"Emacs", NULL, "emacs-everywhere", 0, 1, 1, 0, -1},
     {TERMCLASS, NULL, NULL, 0, 0, 1, 0, -1},
     {NULL, NULL, "Event Tester", 0, 0, 0, 1, -1},
     {TERMCLASS, "floatterm", NULL, 0, 1, 1, 0, -1},
@@ -160,6 +168,7 @@ ResourcePref resources[] = {
 // MODKEY|ShiftMask, XK_z
 // MODKEY|ShiftMask, XK_x
 // MODKEY, XK_c
+// {MODKEY | ShiftMask, XK_c
 // MODKEY, XK_F6
 // MODKEY, XK_F7
 //
@@ -202,18 +211,26 @@ static const Key keys[] = {
     {MODKEY, XK_q, killclient, {0}},
     {MODKEY | ShiftMask, XK_q, spawn, {.v = (const char *[]){"sysact", NULL}}},
     {MODKEY, XK_w, spawn, {.v = (const char *[]){BROWSER, NULL}}},
+    // {MODKEY | ShiftMask,
+    //  XK_w,
+    //  spawn,
+    //  {.v = (const char *[]){TERMINAL, "-e", "nmtui", NULL}}},
     {MODKEY | ShiftMask,
      XK_w,
      spawn,
-     {.v = (const char *[]){TERMINAL, "-e", "nmtui", NULL}}},
-    {MODKEY, XK_e, spawn, {.v = (const char *[]){"thunderbird", NULL}}},
+     {.v = (const char *[]){"librewolf", NULL}}},
+    {MODKEY,
+     XK_e,
+     spawn,
+     {.v = (const char *[]){TERMINAL, "-e", "aerc", NULL}}},
     /* {MODKEY, XK_e, spawn, */
     /*  SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook
        " */
     /*                 "2>/dev/null")}, */
-    {MODKEY | ShiftMask, XK_e, spawn,
-     SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile "
-                    "~/.config/abook/addressbook")},
+    // {MODKEY | ShiftMask, XK_e, spawn,
+    //  SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile "
+    //                 "~/.config/abook/addressbook")},
+    {MODKEY | ShiftMask, XK_e, spawn, SHCMD("emacs-everywhere")},
     {MODKEY,
      XK_r,
      spawn,
@@ -233,6 +250,7 @@ static const Key keys[] = {
      XK_i,
      setlayout,
      {.v = &layouts[7]}}, /* centeredfloatingmaster */
+    {MODKEY, XK_o, spawn, {.v = (const char *[]){"obsidian", NULL}}},
     {MODKEY, XK_p, spawn, {.v = (const char *[]){"mpc", "toggle", NULL}}},
     {MODKEY | ShiftMask, XK_p, spawn, SHCMD("mpc pause; pauseallmpv")},
     {MODKEY,
@@ -288,7 +306,7 @@ static const Key keys[] = {
     {MODKEY, XK_x, incrgaps, {.i = -3}},
     /* { MODKEY|ShiftMask,		XK_x,          spawn, SHCMD("") }, */
     /* {MODKEY, XK_c, spawn, SHCMD("") }, */
-    {MODKEY | ShiftMask, XK_c, spawn, SHCMD("~/.local/bin/everywhere")},
+    // {MODKEY | ShiftMask, XK_c, spawn, SHCMD("")},
     /* V is automatically bound above in STACKKEYS */
     {MODKEY, XK_b, togglebar, {0}},
     {MODKEY | ShiftMask,
